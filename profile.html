@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI农业病虫害识别平台 - 个人中心</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #4CAF50;
+            --primary-hover: #45a049;
+            --secondary-color: #2196F3;
+            --text-color: #333;
+            --light-text: #666;
+            --background: #f5f5f5;
+            --card-bg: #fff;
+            --border-radius: 8px;
+            --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8f5e8 100%);
+            min-height: 100vh;
+            color: var(--text-color);
+        }
+
+        /* 导航栏 */
+        .navbar {
+            background: var(--card-bg);
+            box-shadow: var(--shadow);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-color);
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+        }
+
+        .logo-text {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 8px 12px;
+            border-radius: var(--border-radius);
+        }
+
+        .nav-link:hover {
+            background: rgba(76, 175, 80, 0.1);
+            color: var(--primary-color);
+        }
+
+        .nav-link.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* 主要内容 */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* 页面标题 */
+        .page-title-section {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .page-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+
+        .page-subtitle {
+            font-size: 16px;
+            color: var(--light-text);
+            margin-bottom: 30px;
+        }
+
+        /* 个人信息卡片 */
+        .profile-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: white;
+            margin: 0 auto 20px;
+        }
+
+        .profile-name {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+
+        .profile-email {
+            font-size: 16px;
+            color: var(--light-text);
+            margin-bottom: 20px;
+        }
+
+        .profile-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--light-text);
+        }
+
+        /* 设置选项 */
+        .settings-section {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+        }
+
+        .settings-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+
+        .settings-list {
+            list-style: none;
+        }
+
+        .settings-item {
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .settings-item:last-child {
+            border-bottom: none;
+        }
+
+        .settings-item:hover {
+            background: rgba(76, 175, 80, 0.05);
+            padding-left: 10px;
+            padding-right: 10px;
+            border-radius: var(--border-radius);
+        }
+
+        .settings-item a {
+            text-decoration: none;
+            color: var(--text-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .settings-item span {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .settings-icon {
+            font-size: 18px;
+            color: var(--primary-color);
+        }
+
+        .settings-arrow {
+            font-size: 14px;
+            color: var(--light-text);
+        }
+
+        /* 退出登录按钮 */
+        .logout-btn {
+            margin-top: 30px;
+            width: 100%;
+            padding: 12px;
+            background: #f44336;
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .logout-btn:hover {
+            background: #d32f2f;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
+        }
+
+        /* 页脚 */
+        .footer {
+            background: var(--card-bg);
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            padding: 30px 0;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            color: var(--light-text);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .navbar-container {
+                flex-direction: column;
+                gap: 15px;
+                padding: 0 15px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .main-container {
+                padding: 20px 15px;
+            }
+
+            .page-title {
+                font-size: 24px;
+            }
+
+            .profile-stats {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .settings-section {
+                padding: 20px;
+            }
+
+            .profile-card {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .settings-item {
+                padding: 12px 0;
+            }
+
+            .profile-avatar {
+                width: 100px;
+                height: 100px;
+                font-size: 40px;
+            }
+
+            .profile-name {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="home.html" class="logo">
+                <div class="logo-icon">🌱</div>
+                <span class="logo-text">AI农业病虫害识别平台</span>
+            </a>
+            <div class="nav-links">
+                <a href="home.html" class="nav-link">首页</a>
+                <a href="capture.html" class="nav-link">拍照识别</a>
+                <a href="suggestions.html" class="nav-link">种植建议</a>
+                <a href="history.html" class="nav-link">历史记录</a>
+                <a href="knowledge.html" class="nav-link">知识库</a>
+            </div>
+            <div class="user-menu">
+                <span>欢迎，用户</span>
+                <div class="user-avatar" onclick="location.href='profile.html'">U</div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要内容 -->
+    <main class="main-container">
+        <!-- 页面标题 -->
+        <section class="page-title-section">
+            <h1 class="page-title">个人中心</h1>
+            <p class="page-subtitle">管理您的账户信息和平台设置</p>
+        </section>
+
+        <!-- 个人信息卡片 -->
+        <section class="profile-card">
+            <div class="profile-avatar">U</div>
+            <h2 class="profile-name">用户名</h2>
+            <p class="profile-email">user@example.com</p>
+            <div class="profile-stats">
+                <div class="stat-item">
+                    <div class="stat-number">12</div>
+                    <div class="stat-label">识别次数</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">收藏文章</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">种植建议</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 设置选项 -->
+        <section class="settings-section">
+            <h2 class="settings-title">账户设置</h2>
+            <ul class="settings-list">
+                <li class="settings-item">
+                    <a href="profile-info.html">
+                        <span>
+                            <span class="settings-icon">👤</span>
+                            个人信息
+                        </span>
+                        <span class="settings-arrow">→</span>
+                    </a>
+                </li>
+                <li class="settings-item">
+                    <a href="change-password.html">
+                        <span>
+                            <span class="settings-icon">🔒</span>
+                            修改密码
+                        </span>
+                        <span class="settings-arrow">→</span>
+                    </a>
+                </li>
+                <li class="settings-item">
+                    <a href="history.html">
+                        <span>
+                            <span class="settings-icon">📋</span>
+                            识别历史
+                        </span>
+                        <span class="settings-arrow">→</span>
+                    </a>
+                </li>
+                <li class="settings-item">
+                    <a href="settings.html">
+                        <span>
+                            <span class="settings-icon">⚙️</span>
+                            系统设置
+                        </span>
+                        <span class="settings-arrow">→</span>
+                    </a>
+                </li>
+                <li class="settings-item">
+                    <a href="about.html">
+                        <span>
+                            <span class="settings-icon">ℹ️</span>
+                            关于我们
+                        </span>
+                        <span class="settings-arrow">→</span>
+                    </a>
+                </li>
+            </ul>
+            <button class="logout-btn">退出登录</button>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="footer-text">© 2026 AI农业病虫害识别平台. 保留所有权利.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 退出登录按钮点击事件
+            const logoutBtn = document.querySelector('.logout-btn');
+            logoutBtn.addEventListener('click', function() {
+                if (confirm('确定要退出登录吗？')) {
+                    alert('已退出登录');
+                    // 实际应用中这里会跳转到登录页面
+                    // location.href = 'index.html';
+                }
+            });
+
+            // 用户头像点击事件
+            const userAvatar = document.querySelector('.user-avatar');
+            userAvatar.addEventListener('click', function() {
+                location.href = 'profile.html';
+            });
+        });
+    </script>
+</body>
+</html>

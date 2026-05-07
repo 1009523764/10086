@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI农业病虫害识别平台 - 文章详情</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #4CAF50;
+            --primary-hover: #45a049;
+            --secondary-color: #2196F3;
+            --text-color: #333;
+            --light-text: #666;
+            --background: #f5f5f5;
+            --card-bg: #fff;
+            --border-radius: 8px;
+            --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8f5e8 100%);
+            min-height: 100vh;
+            color: var(--text-color);
+        }
+
+        /* 导航栏 */
+        .navbar {
+            background: var(--card-bg);
+            box-shadow: var(--shadow);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-color);
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+        }
+
+        .logo-text {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 8px 12px;
+            border-radius: var(--border-radius);
+        }
+
+        .nav-link:hover {
+            background: rgba(76, 175, 80, 0.1);
+            color: var(--primary-color);
+        }
+
+        .nav-link.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* 主要内容 */
+        .main-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* 面包屑导航 */
+        .breadcrumb {
+            margin-bottom: 30px;
+            font-size: 14px;
+            color: var(--light-text);
+        }
+
+        .breadcrumb a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .breadcrumb span {
+            margin: 0 8px;
+        }
+
+        /* 文章容器 */
+        .article-container {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 40px;
+        }
+
+        /* 文章头部 */
+        .article-header {
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .article-category {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(76, 175, 80, 0.1);
+            color: var(--primary-color);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .article-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-color);
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .article-meta {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 14px;
+            color: var(--light-text);
+        }
+
+        .article-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* 文章内容 */
+        .article-content {
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--text-color);
+        }
+
+        .article-content h2 {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 30px 0 15px 0;
+            color: var(--text-color);
+        }
+
+        .article-content h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 25px 0 12px 0;
+            color: var(--text-color);
+        }
+
+        .article-content p {
+            margin-bottom: 15px;
+        }
+
+        .article-content ul, .article-content ol {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+
+        .article-content li {
+            margin-bottom: 8px;
+        }
+
+        .article-content img {
+            max-width: 100%;
+            border-radius: var(--border-radius);
+            margin: 20px 0;
+        }
+
+        .article-content .highlight-box {
+            background: rgba(76, 175, 80, 0.05);
+            border-left: 4px solid var(--primary-color);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        .article-content .tip-box {
+            background: rgba(33, 150, 243, 0.05);
+            border-left: 4px solid var(--secondary-color);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        .article-content .warning-box {
+            background: rgba(255, 152, 0, 0.05);
+            border-left: 4px solid #ff9800;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        /* 文章底部 */
+        .article-footer {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #eee;
+        }
+
+        .article-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .article-tag {
+            padding: 6px 12px;
+            background: #f5f5f5;
+            border-radius: 20px;
+            font-size: 12px;
+            color: var(--light-text);
+        }
+
+        .article-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            background: white;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .action-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .action-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        /* 相关文章 */
+        .related-articles {
+            margin-top: 40px;
+        }
+
+        .related-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+
+        .related-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .related-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .related-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .related-card-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+
+        .related-card-excerpt {
+            font-size: 14px;
+            color: var(--light-text);
+            line-height: 1.5;
+        }
+
+        /* 页脚 */
+        .footer {
+            background: var(--card-bg);
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            padding: 30px 0;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            color: var(--light-text);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .navbar-container {
+                flex-direction: column;
+                gap: 15px;
+                padding: 0 15px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .main-container {
+                padding: 20px 15px;
+            }
+
+            .article-container {
+                padding: 25px;
+            }
+
+            .article-title {
+                font-size: 22px;
+            }
+
+            .article-content {
+                font-size: 15px;
+            }
+
+            .article-actions {
+                flex-wrap: wrap;
+            }
+
+            .action-btn {
+                flex: 1;
+                min-width: 120px;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .article-container {
+                padding: 20px;
+            }
+
+            .article-title {
+                font-size: 20px;
+            }
+
+            .article-meta {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .related-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="home.html" class="logo">
+                <div class="logo-icon">🌱</div>
+                <span class="logo-text">AI农业病虫害识别平台</span>
+            </a>
+            <div class="nav-links">
+                <a href="home.html" class="nav-link">首页</a>
+                <a href="capture.html" class="nav-link">拍照识别</a>
+                <a href="suggestions.html" class="nav-link">种植建议</a>
+                <a href="history.html" class="nav-link">历史记录</a>
+                <a href="knowledge.html" class="nav-link active">知识库</a>
+            </div>
+            <div class="user-menu">
+                <span>欢迎，用户</span>
+                <div class="user-avatar" onclick="location.href='profile.html'">U</div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要内容 -->
+    <main class="main-container">
+        <!-- 面包屑导航 -->
+        <nav class="breadcrumb">
+            <a href="home.html">首页</a>
+            <span>></span>
+            <a href="knowledge.html">知识库</a>
+            <span>></span>
+            <span id="articleCategory">病虫害防治</span>
+        </nav>
+
+        <!-- 文章容器 -->
+        <article class="article-container">
+            <!-- 文章头部 -->
+            <header class="article-header">
+                <span class="article-category" id="articleCategoryTag">病虫害防治</span>
+                <h1 class="article-title" id="articleTitle">水稻稻瘟病的识别与防治</h1>
+                <div class="article-meta">
+                    <span>📅 发布时间: <span id="articleDate">2026-03-15</span></span>
+                    <span>👁️ 阅读量: <span id="articleViews">1,250</span></span>
+                    <span>⏱️ 阅读时长: <span id="articleReadTime">5分钟</span></span>
+                </div>
+            </header>
+
+            <!-- 文章内容 -->
+            <div class="article-content" id="articleContent">
+                <p>稻瘟病是水稻的主要病害之一，由真菌引起，可危害水稻的各个部位，导致产量严重下降。本文将详细介绍稻瘟病的识别方法和综合防治措施，帮助农民有效控制病害发生。</p>
+
+                <h2>一、稻瘟病的危害症状</h2>
+                <p>稻瘟病主要危害水稻的叶片、叶鞘、茎秆和穗部。根据发病部位不同，可分为以下几种类型：</p>
+
+                <h3>1. 叶瘟</h3>
+                <p>发生在水稻叶片上，是最常见的类型。病斑呈梭形或纺锤形，边缘褐色，中央灰白色，两端有褐色坏死线。严重时叶片枯死，影响光合作用。</p>
+
+                <div class="highlight-box">
+                    <strong>识别要点：</strong>病斑梭形、边缘褐色、中央灰白、有坏死线
+                </div>
+
+                <h3>2. 节瘟</h3>
+                <p>发生在水稻茎节处，病斑褐色至黑褐色，环绕茎节，导致茎节腐烂折断，造成白穗。</p>
+
+                <h3>3. 穗颈瘟</h3>
+                <p>发生在穗颈部，病斑褐色至黑褐色，环绕穗颈，阻碍养分输送，导致白穗或秕谷。</p>
+
+                <div class="warning-box">
+                    <strong>注意：</strong>穗颈瘟是造成水稻减产最严重的类型，可导致减产30%-50%
+                </div>
+
+                <h2>二、发病条件</h2>
+                <p>稻瘟病的发生与以下因素密切相关：</p>
+                <ul>
+                    <li><strong>温度：</strong>最适发病温度为25-28℃</li>
+                    <li><strong>湿度：</strong>相对湿度90%以上有利于发病</li>
+                    <li><strong>氮肥：</strong>氮肥过多、过迟施用易发病</li>
+                    <li><strong>品种：</strong>感病品种发病重</li>
+                    <li><strong>气候：</strong>阴雨连绵、日照不足易发病</li>
+                </ul>
+
+                <h2>三、综合防治措施</h2>
+
+                <h3>1. 农业防治</h3>
+                <ul>
+                    <li>选用抗病品种，如汕优63、两优培九等</li>
+                    <li>合理施肥，避免氮肥过多、过迟</li>
+                    <li>科学灌水，避免长期深水灌溉</li>
+                    <li>及时处理病稻草，减少菌源</li>
+                </ul>
+
+                <div class="tip-box">
+                    <strong>施肥建议：</strong>基肥为主，追肥为辅；氮、磷、钾配合施用；避免偏施氮肥
+                </div>
+
+                <h3>2. 化学防治</h3>
+                <p>在发病初期及时喷药防治，常用药剂有：</p>
+                <ul>
+                    <li><strong>三环唑：</strong>75%可湿性粉剂，每亩100-150克</li>
+                    <li><strong>稻瘟灵：</strong>40%乳油，每亩100-150毫升</li>
+                    <li><strong>春雷霉素：</strong>2%水剂，每亩100-150毫升</li>
+                    <li><strong>咪鲜胺：</strong>25%乳油，每亩60-80毫升</li>
+                </ul>
+
+                <h3>3. 生物防治</h3>
+                <p>利用拮抗微生物进行防治，如：</p>
+                <ul>
+                    <li>枯草芽孢杆菌</li>
+                    <li>木霉菌</li>
+                    <li>放线菌</li>
+                </ul>
+
+                <h2>四、防治关键时期</h2>
+                <p>稻瘟病的防治关键时期包括：</p>
+                <ol>
+                    <li><strong>苗期：</strong>注意苗瘟的发生</li>
+                    <li><strong>分蘖期：</strong>注意叶瘟的发生</li>
+                    <li><strong>孕穗期：</strong>注意叶瘟和节瘟的发生</li>
+                    <li><strong>抽穗期：</strong>重点防治穗颈瘟</li>
+                    <li><strong>灌浆期：</strong>注意粒瘟的发生</li>
+                </ol>
+
+                <h2>五、注意事项</h2>
+                <div class="warning-box">
+                    <ul style="margin: 0;">
+                        <li>喷药时要均匀周到，叶背、叶面都要喷到</li>
+                        <li>雨天或露水未干时不宜喷药</li>
+                        <li>注意轮换用药，避免产生抗药性</li>
+                        <li>严格遵守安全间隔期</li>
+                    </ul>
+                </div>
+
+                <p>通过采取以上综合防治措施，可以有效控制稻瘟病的发生和危害，确保水稻安全生产。</p>
+            </div>
+
+            <!-- 文章底部 -->
+            <footer class="article-footer">
+                <div class="article-tags">
+                    <span class="article-tag">稻瘟病</span>
+                    <span class="article-tag">水稻病害</span>
+                    <span class="article-tag">病虫害防治</span>
+                    <span class="article-tag">农药使用</span>
+                    <span class="article-tag">农业技术</span>
+                </div>
+                <div class="article-actions">
+                    <button class="action-btn" id="likeBtn" onclick="toggleLike()">
+                        <span>👍</span>
+                        <span id="likeCount">128</span>
+                    </button>
+                    <button class="action-btn" onclick="shareArticle()">
+                        <span>📤</span>
+                        <span>分享</span>
+                    </button>
+                    <button class="action-btn" onclick="collectArticle()">
+                        <span>⭐</span>
+                        <span id="collectText">收藏</span>
+                    </button>
+                </div>
+            </footer>
+        </article>
+
+        <!-- 相关文章 -->
+        <section class="related-articles">
+            <h2 class="related-title">相关文章推荐</h2>
+            <div class="related-list">
+                <div class="related-card" onclick="goToArticle('水稻纹枯病的识别与防治')">
+                    <h3 class="related-card-title">水稻纹枯病的识别与防治</h3>
+                    <p class="related-card-excerpt">纹枯病是水稻的常见病害，本文介绍其识别方法和防治措施...</p>
+                </div>
+                <div class="related-card" onclick="goToArticle('水稻白叶枯病的识别与防治')">
+                    <h3 class="related-card-title">水稻白叶枯病的识别与防治</h3>
+                    <p class="related-card-excerpt">白叶枯病是水稻的主要病害之一，本文详细介绍其防治方法...</p>
+                </div>
+                <div class="related-card" onclick="goToArticle('水稻病虫害综合防治策略')">
+                    <h3 class="related-card-title">水稻病虫害综合防治策略</h3>
+                    <p class="related-card-excerpt">采用综合防治策略可以有效控制水稻病虫害，减少农药使用...</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="footer-text">© 2026 AI农业病虫害识别平台. 保留所有权利.</p>
+        </div>
+    </footer>
+
+    <script>
+        // 获取URL参数
+        function getUrlParam(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        // 文章数据
+        const articlesData = {
+            '水稻稻瘟病的识别与防治': {
+                category: '病虫害防治',
+                date: '2026-03-15',
+                views: '1,250',
+                readTime: '5分钟',
+                content: document.getElementById('articleContent').innerHTML
+            },
+            '水稻优质品种选择指南': {
+                category: '品种选择',
+                date: '2026-03-10',
+                views: '980',
+                readTime: '8分钟',
+                content: '<p>选择适合当地气候和土壤条件的水稻品种是获得高产的关键...</p>'
+            },
+            '水稻科学施肥技术': {
+                category: '种植技术',
+                date: '2026-03-05',
+                views: '850',
+                readTime: '6分钟',
+                content: '<p>合理施肥是提高水稻产量和品质的重要措施...</p>'
+            },
+            '水稻节水灌溉技术': {
+                category: '灌溉技术',
+                date: '2026-02-28',
+                views: '720',
+                readTime: '4分钟',
+                content: '<p>水资源短缺是农业面临的重要挑战...</p>'
+            },
+            '水稻病虫害综合防治策略': {
+                category: '病虫害防治',
+                date: '2026-02-20',
+                views: '1,050',
+                readTime: '7分钟',
+                content: '<p>采用综合防治策略可以有效控制水稻病虫害...</p>'
+            },
+            '水稻直播种植技术': {
+                category: '种植技术',
+                date: '2026-02-15',
+                views: '680',
+                readTime: '5分钟',
+                content: '<p>水稻直播种植技术具有省工、省力、节本等优点...</p>'
+            }
+        };
+
+        // 加载文章内容
+        function loadArticle() {
+            const title = getUrlParam('title') || '水稻稻瘟病的识别与防治';
+            const article = articlesData[title];
+
+            if (article) {
+                document.getElementById('articleTitle').textContent = title;
+                document.getElementById('articleCategory').textContent = article.category;
+                document.getElementById('articleCategoryTag').textContent = article.category;
+                document.getElementById('articleDate').textContent = article.date;
+                document.getElementById('articleViews').textContent = article.views;
+                document.getElementById('articleReadTime').textContent = article.readTime;
+                
+                if (title !== '水稻稻瘟病的识别与防治') {
+                    document.getElementById('articleContent').innerHTML = article.content;
+                }
+            }
+        }
+
+        // 点赞功能
+        let isLiked = false;
+        let likeCount = 128;
+
+        function toggleLike() {
+            const likeBtn = document.getElementById('likeBtn');
+            const likeCountElement = document.getElementById('likeCount');
+
+            isLiked = !isLiked;
+            
+            if (isLiked) {
+                likeCount++;
+                likeBtn.classList.add('active');
+            } else {
+                likeCount--;
+                likeBtn.classList.remove('active');
+            }
+
+            likeCountElement.textContent = likeCount;
+        }
+
+        // 分享功能
+        function shareArticle() {
+            if (navigator.share) {
+                navigator.share({
+                    title: document.getElementById('articleTitle').textContent,
+                    text: '我在AI农业病虫害识别平台发现了一篇好文章，推荐给你！',
+                    url: window.location.href
+                });
+            } else {
+                // 复制链接到剪贴板
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    alert('文章链接已复制到剪贴板');
+                });
+            }
+        }
+
+        // 收藏功能
+        let isCollected = false;
+
+        function collectArticle() {
+            const collectText = document.getElementById('collectText');
+            isCollected = !isCollected;
+            
+            if (isCollected) {
+                collectText.textContent = '已收藏';
+                alert('文章已收藏');
+            } else {
+                collectText.textContent = '收藏';
+                alert('已取消收藏');
+            }
+        }
+
+        // 跳转到相关文章
+        function goToArticle(title) {
+            window.location.href = `article.html?title=${encodeURIComponent(title)}`;
+        }
+
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            // 加载文章内容
+            loadArticle();
+
+            // 用户头像点击事件
+            const userAvatar = document.querySelector('.user-avatar');
+            userAvatar.addEventListener('click', function() {
+                location.href = 'profile.html';
+            });
+        });
+    </script>
+</body>
+</html>

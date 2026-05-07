@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI农业病虫害识别平台 - 系统设置</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #4CAF50;
+            --primary-hover: #45a049;
+            --secondary-color: #2196F3;
+            --text-color: #333;
+            --light-text: #666;
+            --background: #f5f5f5;
+            --card-bg: #fff;
+            --border-radius: 8px;
+            --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8f5e8 100%);
+            min-height: 100vh;
+            color: var(--text-color);
+        }
+
+        /* 导航栏 */
+        .navbar {
+            background: var(--card-bg);
+            box-shadow: var(--shadow);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-color);
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+        }
+
+        .logo-text {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 8px 12px;
+            border-radius: var(--border-radius);
+        }
+
+        .nav-link:hover {
+            background: rgba(76, 175, 80, 0.1);
+            color: var(--primary-color);
+        }
+
+        .nav-link.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* 主要内容 */
+        .main-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* 页面标题 */
+        .page-title-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .page-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+
+        .page-subtitle {
+            font-size: 16px;
+            color: var(--light-text);
+        }
+
+        /* 返回按钮 */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary-color);
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        /* 设置容器 */
+        .settings-container {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        /* 设置分组 */
+        .settings-group {
+            padding: 30px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .settings-group:last-child {
+            border-bottom: none;
+        }
+
+        .settings-group-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .settings-group-title .icon {
+            font-size: 20px;
+        }
+
+        /* 设置项 */
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+
+        .setting-info {
+            flex: 1;
+        }
+
+        .setting-label {
+            font-weight: 500;
+            color: var(--text-color);
+            margin-bottom: 5px;
+        }
+
+        .setting-description {
+            font-size: 14px;
+            color: var(--light-text);
+        }
+
+        /* 开关 */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 28px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: var(--transition);
+            border-radius: 28px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: var(--transition);
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary-color);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(22px);
+        }
+
+        /* 选择器 */
+        .setting-select {
+            padding: 8px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 14px;
+            background: white;
+            cursor: pointer;
+            min-width: 120px;
+        }
+
+        .setting-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        /* 主题选项 */
+        .theme-options {
+            display: flex;
+            gap: 15px;
+        }
+
+        .theme-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .theme-option:hover {
+            background: #f5f5f5;
+        }
+
+        .theme-option.active {
+            border-color: var(--primary-color);
+            background: rgba(76, 175, 80, 0.1);
+        }
+
+        .theme-preview {
+            width: 60px;
+            height: 40px;
+            border-radius: var(--border-radius);
+            border: 1px solid #ddd;
+        }
+
+        .theme-preview.light {
+            background: white;
+        }
+
+        .theme-preview.dark {
+            background: #333;
+        }
+
+        .theme-preview.auto {
+            background: linear-gradient(to right, white 50%, #333 50%);
+        }
+
+        .theme-label {
+            font-size: 12px;
+            color: var(--light-text);
+        }
+
+        /* 按钮组 */
+        .button-group {
+            display: flex;
+            gap: 15px;
+            padding: 30px;
+            background: #fafafa;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--text-color);
+            border: 1px solid #ddd;
+        }
+
+        .btn-secondary:hover {
+            background: #f5f5f5;
+        }
+
+        /* 成功消息 */
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 12px 30px;
+            display: none;
+        }
+
+        /* 页脚 */
+        .footer {
+            background: var(--card-bg);
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            padding: 30px 0;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            color: var(--light-text);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .navbar-container {
+                flex-direction: column;
+                gap: 15px;
+                padding: 0 15px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .main-container {
+                padding: 20px 15px;
+            }
+
+            .settings-group {
+                padding: 20px;
+            }
+
+            .page-title {
+                font-size: 24px;
+            }
+
+            .setting-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .theme-options {
+                width: 100%;
+                justify-content: space-around;
+            }
+
+            .button-group {
+                flex-direction: column;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="home.html" class="logo">
+                <div class="logo-icon">🌱</div>
+                <span class="logo-text">AI农业病虫害识别平台</span>
+            </a>
+            <div class="nav-links">
+                <a href="home.html" class="nav-link">首页</a>
+                <a href="capture.html" class="nav-link">拍照识别</a>
+                <a href="suggestions.html" class="nav-link">种植建议</a>
+                <a href="history.html" class="nav-link">历史记录</a>
+                <a href="knowledge.html" class="nav-link">知识库</a>
+            </div>
+            <div class="user-menu">
+                <span>欢迎，用户</span>
+                <div class="user-avatar" onclick="location.href='profile.html'">U</div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要内容 -->
+    <main class="main-container">
+        <!-- 返回链接 -->
+        <a href="profile.html" class="back-link">← 返回个人中心</a>
+
+        <!-- 页面标题 -->
+        <section class="page-title-section">
+            <h1 class="page-title">系统设置</h1>
+            <p class="page-subtitle">自定义您的应用体验</p>
+        </section>
+
+        <!-- 成功消息 -->
+        <div class="success-message" id="successMessage">
+            设置已保存！
+        </div>
+
+        <!-- 设置容器 -->
+        <div class="settings-container">
+            <!-- 通知设置 -->
+            <div class="settings-group">
+                <h2 class="settings-group-title">
+                    <span class="icon">🔔</span>
+                    通知设置
+                </h2>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <div class="setting-label">推送通知</div>
+                        <div class="setting-description">接收识别结果和系统消息的推送</div>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="pushNotification" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <div class="setting-label">邮件通知</div>
+                        <div class="setting-description">接收重要更新和营销邮件</div>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="emailNotification">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <div class="setting-label">声音提醒</div>
+                        <div class="setting-description">识别完成时播放提示音</div>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="soundAlert" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- 显示设置 -->
+            <div class="settings-group">
+                <h2 class="settings-group-title">
+                    <span class="icon">🎨</span>
+                    显示设置
+                </h2>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <div class="setting-label">主题模式</div>
+                        <div class="setting-description">选择您喜欢的界面主题</div>
+                    </div>
+                    <div class="theme-options">
+                        <div class="theme-option active" data-theme="light">
+                            <div class="theme-preview light"></div>
+                            <span class="theme-label">浅色</span>
+                        </div>
+                        <div class="theme-option" data-theme="dark">
+                            <div class="theme-preview dark"></div>
+                            <span class="theme-label">深色</span>
+                        </div>
+                        <div class="theme-option" data-theme="auto">
+                            <div class="theme-preview auto"></div>
+                            <span class="theme-label">跟随系统</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <div class="setting-label">字体大小</div>
+                        <div class="setting-description">调整应用内的文字大小</div>
+                    </div>
+                    <select class="setting-select" id="fontSize">
+                        <option value="small">小</option>
+                        <option value="medium" selected>中</option>
+                        <option value="large">大</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- 语言设置 -->
+            <div class="settings-group">
+                <h2 class="settings-group-title">
+                    <span class="icon">🌐</span>
+                    语言与地区
+                </h2>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <div class="setting-label">界面语言</div>
+                        <div class="setting-description">选择应用显示语言</div>
+                    </div>
+                    <select class="setting-select" id="language">
+                        <option value="zh-CN" selected>简体中文</option>
+                        <option value="zh-TW">繁體中文</option>
+                        <option value="en">English</option>
+                    </select>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <div class="setting-label">数据同步</div>
+                        <div class="setting-description">自动同步识别历史到云端</div>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="autoSync" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- 隐私设置 -->
+            <div class="settings-group">
+                <h2 class="settings-group-title">
+                    <span class="icon">🔒</span>
+                    隐私设置
+                </h2>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <div class="setting-label">使用分析</div>
+                        <div class="setting-description">帮助我们改进产品（匿名数据）</div>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="analytics" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <div class="setting-label">个性化推荐</div>
+                        <div class="setting-description">基于使用习惯推荐相关内容</div>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="personalization" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- 按钮组 -->
+            <div class="button-group">
+                <button type="button" class="btn btn-secondary" onclick="history.back()">取消</button>
+                <button type="button" class="btn btn-primary" id="saveSettings">保存设置</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="footer-text">© 2026 AI农业病虫害识别平台. 保留所有权利.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 主题选择
+            const themeOptions = document.querySelectorAll('.theme-option');
+            themeOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    themeOptions.forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+
+            // 保存设置
+            const saveBtn = document.getElementById('saveSettings');
+            const successMessage = document.getElementById('successMessage');
+
+            saveBtn.addEventListener('click', function() {
+                // 收集所有设置
+                const settings = {
+                    pushNotification: document.getElementById('pushNotification').checked,
+                    emailNotification: document.getElementById('emailNotification').checked,
+                    soundAlert: document.getElementById('soundAlert').checked,
+                    theme: document.querySelector('.theme-option.active').dataset.theme,
+                    fontSize: document.getElementById('fontSize').value,
+                    language: document.getElementById('language').value,
+                    autoSync: document.getElementById('autoSync').checked,
+                    analytics: document.getElementById('analytics').checked,
+                    personalization: document.getElementById('personalization').checked
+                };
+
+                console.log('保存设置:', settings);
+
+                // 保存到本地存储
+                localStorage.setItem('appSettings', JSON.stringify(settings));
+
+                // 显示成功消息
+                successMessage.style.display = 'block';
+
+                // 3秒后隐藏
+                setTimeout(function() {
+                    successMessage.style.display = 'none';
+                }, 3000);
+            });
+
+            // 加载已保存的设置
+            const savedSettings = localStorage.getItem('appSettings');
+            if (savedSettings) {
+                const settings = JSON.parse(savedSettings);
+
+                document.getElementById('pushNotification').checked = settings.pushNotification !== false;
+                document.getElementById('emailNotification').checked = settings.emailNotification === true;
+                document.getElementById('soundAlert').checked = settings.soundAlert !== false;
+                document.getElementById('fontSize').value = settings.fontSize || 'medium';
+                document.getElementById('language').value = settings.language || 'zh-CN';
+                document.getElementById('autoSync').checked = settings.autoSync !== false;
+                document.getElementById('analytics').checked = settings.analytics !== false;
+                document.getElementById('personalization').checked = settings.personalization !== false;
+
+                // 设置主题
+                if (settings.theme) {
+                    themeOptions.forEach(opt => {
+                        opt.classList.remove('active');
+                        if (opt.dataset.theme === settings.theme) {
+                            opt.classList.add('active');
+                        }
+                    });
+                }
+            }
+
+            // 用户头像点击事件
+            const userAvatar = document.querySelector('.user-avatar');
+            userAvatar.addEventListener('click', function() {
+                location.href = 'profile.html';
+            });
+        });
+    </script>
+</body>
+</html>

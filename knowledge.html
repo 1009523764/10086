@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI农业病虫害识别平台 - 知识库</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #4CAF50;
+            --primary-hover: #45a049;
+            --secondary-color: #2196F3;
+            --text-color: #333;
+            --light-text: #666;
+            --background: #f5f5f5;
+            --card-bg: #fff;
+            --border-radius: 8px;
+            --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8f5e8 100%);
+            min-height: 100vh;
+            color: var(--text-color);
+        }
+
+        /* 导航栏 */
+        .navbar {
+            background: var(--card-bg);
+            box-shadow: var(--shadow);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-color);
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+        }
+
+        .logo-text {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 8px 12px;
+            border-radius: var(--border-radius);
+        }
+
+        .nav-link:hover {
+            background: rgba(76, 175, 80, 0.1);
+            color: var(--primary-color);
+        }
+
+        .nav-link.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* 主要内容 */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* 页面标题 */
+        .page-title-section {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .page-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+
+        .page-subtitle {
+            font-size: 16px;
+            color: var(--light-text);
+            margin-bottom: 30px;
+        }
+
+        /* 知识库分类 */
+        .knowledge-categories {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            padding: 10px 20px;
+            border: 1px solid var(--primary-color);
+            border-radius: var(--border-radius);
+            background: white;
+            color: var(--primary-color);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .category-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .category-btn.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* 知识库文章列表 */
+        .knowledge-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .knowledge-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 20px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .knowledge-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .knowledge-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+
+        .knowledge-excerpt {
+            font-size: 14px;
+            color: var(--light-text);
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .knowledge-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--light-text);
+        }
+
+        /* 搜索框 */
+        .search-section {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .search-input {
+            width: 100%;
+            max-width: 600px;
+            padding: 12px 20px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+        }
+
+        /* 页脚 */
+        .footer {
+            background: var(--card-bg);
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            padding: 30px 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            color: var(--light-text);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .navbar-container {
+                flex-direction: column;
+                gap: 15px;
+                padding: 0 15px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .main-container {
+                padding: 20px 15px;
+            }
+
+            .page-title {
+                font-size: 24px;
+            }
+
+            .knowledge-list {
+                grid-template-columns: 1fr;
+            }
+
+            .knowledge-categories {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .category-btn {
+                width: 100%;
+                max-width: 300px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .knowledge-card {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="home.html" class="logo">
+                <div class="logo-icon">🌱</div>
+                <span class="logo-text">AI农业病虫害识别平台</span>
+            </a>
+            <div class="nav-links">
+                <a href="home.html" class="nav-link">首页</a>
+                <a href="capture.html" class="nav-link">拍照识别</a>
+                <a href="suggestions.html" class="nav-link">种植建议</a>
+                <a href="history.html" class="nav-link">历史记录</a>
+                <a href="knowledge.html" class="nav-link active">知识库</a>
+            </div>
+            <div class="user-menu">
+                <span>欢迎，用户</span>
+                <div class="user-avatar" onclick="location.href='profile.html'">U</div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要内容 -->
+    <main class="main-container">
+        <!-- 页面标题 -->
+        <section class="page-title-section">
+            <h1 class="page-title">水稻种植知识库</h1>
+            <p class="page-subtitle">探索水稻种植的专业知识，提升种植技能和产量</p>
+        </section>
+
+        <!-- 搜索框 -->
+        <section class="search-section">
+            <input type="text" class="search-input" placeholder="搜索知识库文章...">
+        </section>
+
+        <!-- 知识库分类 -->
+        <section class="knowledge-categories">
+            <button class="category-btn active">全部</button>
+            <button class="category-btn">病虫害防治</button>
+            <button class="category-btn">种植技术</button>
+            <button class="category-btn">品种选择</button>
+            <button class="category-btn">土壤管理</button>
+            <button class="category-btn">灌溉技术</button>
+        </section>
+
+        <!-- 知识库文章列表 -->
+        <section class="knowledge-list">
+            <div class="knowledge-card">
+                <h3 class="knowledge-title">水稻稻瘟病的识别与防治</h3>
+                <p class="knowledge-excerpt">稻瘟病是水稻的主要病害之一，本文详细介绍稻瘟病的识别方法和综合防治措施，帮助农民有效控制病害发生。</p>
+                <div class="knowledge-meta">
+                    <span>发布时间: 2026-03-15</span>
+                    <span>阅读量: 1250</span>
+                </div>
+            </div>
+            <div class="knowledge-card">
+                <h3 class="knowledge-title">水稻优质品种选择指南</h3>
+                <p class="knowledge-excerpt">选择适合当地气候和土壤条件的水稻品种是获得高产的关键，本文提供了不同地区水稻品种的选择建议。</p>
+                <div class="knowledge-meta">
+                    <span>发布时间: 2026-03-10</span>
+                    <span>阅读量: 980</span>
+                </div>
+            </div>
+            <div class="knowledge-card">
+                <h3 class="knowledge-title">水稻科学施肥技术</h3>
+                <p class="knowledge-excerpt">合理施肥是提高水稻产量和品质的重要措施，本文介绍了水稻不同生长阶段的施肥方法和注意事项。</p>
+                <div class="knowledge-meta">
+                    <span>发布时间: 2026-03-05</span>
+                    <span>阅读量: 850</span>
+                </div>
+            </div>
+            <div class="knowledge-card">
+                <h3 class="knowledge-title">水稻节水灌溉技术</h3>
+                <p class="knowledge-excerpt">水资源短缺是农业面临的重要挑战，本文介绍了水稻节水灌溉的新技术和实践方法。</p>
+                <div class="knowledge-meta">
+                    <span>发布时间: 2026-02-28</span>
+                    <span>阅读量: 720</span>
+                </div>
+            </div>
+            <div class="knowledge-card">
+                <h3 class="knowledge-title">水稻病虫害综合防治策略</h3>
+                <p class="knowledge-excerpt">采用综合防治策略可以有效控制水稻病虫害，减少农药使用，保护环境和提高产量。</p>
+                <div class="knowledge-meta">
+                    <span>发布时间: 2026-02-20</span>
+                    <span>阅读量: 1050</span>
+                </div>
+            </div>
+            <div class="knowledge-card">
+                <h3 class="knowledge-title">水稻直播种植技术</h3>
+                <p class="knowledge-excerpt">水稻直播种植技术具有省工、省力、节本等优点，本文详细介绍了直播种植的关键技术和注意事项。</p>
+                <div class="knowledge-meta">
+                    <span>发布时间: 2026-02-15</span>
+                    <span>阅读量: 680</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="footer-text">© 2026 AI农业病虫害识别平台. 保留所有权利.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 分类按钮点击事件
+            const categoryBtns = document.querySelectorAll('.category-btn');
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    categoryBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    // 这里可以添加分类筛选逻辑
+                });
+            });
+
+            // 知识库卡片点击事件
+            const knowledgeCards = document.querySelectorAll('.knowledge-card');
+            knowledgeCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const title = this.querySelector('.knowledge-title').textContent;
+                    window.location.href = `article.html?title=${encodeURIComponent(title)}`;
+                });
+            });
+
+            // 用户头像点击事件
+            const userAvatar = document.querySelector('.user-avatar');
+            userAvatar.addEventListener('click', function() {
+                location.href = 'profile.html';
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI农业病虫害识别平台 - 种植建议</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #4CAF50;
+            --primary-hover: #45a049;
+            --secondary-color: #2196F3;
+            --text-color: #333;
+            --light-text: #666;
+            --background: #f5f5f5;
+            --card-bg: #fff;
+            --border-radius: 8px;
+            --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8f5e8 100%);
+            min-height: 100vh;
+            color: var(--text-color);
+        }
+
+        /* 导航栏 */
+        .navbar {
+            background: var(--card-bg);
+            box-shadow: var(--shadow);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-color);
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+        }
+
+        .logo-text {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 8px 12px;
+            border-radius: var(--border-radius);
+        }
+
+        .nav-link:hover {
+            background: rgba(76, 175, 80, 0.1);
+            color: var(--primary-color);
+        }
+
+        .nav-link.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* 主要内容 */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* 页面标题 */
+        .page-title-section {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .page-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+
+        .page-subtitle {
+            font-size: 16px;
+            color: var(--light-text);
+            margin-bottom: 30px;
+        }
+
+        /* 作物选择器 */
+        .crop-selector {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+
+        .selector-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+
+        .crop-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+        }
+
+        .crop-btn {
+            background: rgba(76, 175, 80, 0.05);
+            border: 2px solid transparent;
+            border-radius: var(--border-radius);
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .crop-btn:hover {
+            background: rgba(76, 175, 80, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .crop-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .crop-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+
+        .crop-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* 种植建议内容 */
+        .suggestions-content {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        /* 主要建议区域 */
+        .main-suggestions {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+        }
+
+        .suggestion-section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-icon {
+            font-size: 20px;
+            color: var(--primary-color);
+        }
+
+        .suggestion-item {
+            background: rgba(76, 175, 80, 0.05);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: var(--transition);
+        }
+
+        .suggestion-item:hover {
+            background: rgba(76, 175, 80, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .suggestion-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+
+        .suggestion-description {
+            font-size: 14px;
+            color: var(--light-text);
+            line-height: 1.6;
+        }
+
+        /* 侧边栏 */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .sidebar-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 20px;
+        }
+
+        .sidebar-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text-color);
+        }
+
+        .weather-info {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .weather-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .weather-item:last-child {
+            border-bottom: none;
+        }
+
+        .weather-label {
+            font-size: 14px;
+            color: var(--light-text);
+        }
+
+        .weather-value {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .growth-stages {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .stage-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: rgba(76, 175, 80, 0.05);
+            border-radius: var(--border-radius);
+        }
+
+        .stage-icon {
+            font-size: 16px;
+            color: var(--primary-color);
+        }
+
+        .stage-info {
+            flex: 1;
+        }
+
+        .stage-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .stage-duration {
+            font-size: 12px;
+            color: var(--light-text);
+        }
+
+        .stage-progress {
+            width: 60px;
+            font-size: 12px;
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        /* 季节性建议 */
+        .seasonal-suggestions {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+            margin-bottom: 60px;
+        }
+
+        .seasonal-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .seasonal-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .season-card {
+            background: rgba(76, 175, 80, 0.05);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            transition: var(--transition);
+        }
+
+        .season-card:hover {
+            background: rgba(76, 175, 80, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .season-name {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .season-icon {
+            font-size: 16px;
+            color: var(--primary-color);
+        }
+
+        .season-tips {
+            list-style: none;
+        }
+
+        .season-tip {
+            font-size: 14px;
+            color: var(--light-text);
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .season-tip::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        /* 页脚 */
+        .footer {
+            background: var(--card-bg);
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            padding: 30px 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            color: var(--light-text);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .navbar-container {
+                flex-direction: column;
+                gap: 15px;
+                padding: 0 15px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .main-container {
+                padding: 20px 15px;
+            }
+
+            .page-title {
+                font-size: 24px;
+            }
+
+            .suggestions-content {
+                grid-template-columns: 1fr;
+            }
+
+            .crop-buttons {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .seasonal-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .crop-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .crop-selector {
+                padding: 20px;
+            }
+
+            .main-suggestions {
+                padding: 20px;
+            }
+
+            .seasonal-suggestions {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="home.html" class="logo">
+                <div class="logo-icon">🌱</div>
+                <span class="logo-text">AI农业病虫害识别平台</span>
+            </a>
+            <div class="nav-links">
+                <a href="home.html" class="nav-link">首页</a>
+                <a href="capture.html" class="nav-link">拍照识别</a>
+                <a href="suggestions.html" class="nav-link active">种植建议</a>
+                <a href="history.html" class="nav-link">历史记录</a>
+                <a href="knowledge.html" class="nav-link">知识库</a>
+            </div>
+            <div class="user-menu">
+                <span>欢迎，用户</span>
+                <div class="user-avatar" onclick="location.href='profile.html'">U</div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要内容 -->
+    <main class="main-container">
+        <!-- 页面标题 -->
+        <section class="page-title-section">
+            <h1 class="page-title">水稻种植建议</h1>
+            <p class="page-subtitle">根据水稻生长阶段，提供专业的种植管理建议和病虫害防治方案</p>
+        </section>
+
+        <!-- 作物选择器 -->
+        <section class="crop-selector">
+            <h2 class="selector-title">水稻品种选择</h2>
+            <div class="crop-buttons">
+                <div class="crop-btn active">
+                    <img src="image/2026-04-23_142305.png" alt="常规水稻" class="crop-icon">
+                    <div class="crop-name">常规水稻</div>
+                </div>
+                <div class="crop-btn">
+                    <img src="image/2026-04-23_142409.png" alt="杂交水稻" class="crop-icon">
+                    <div class="crop-name">杂交水稻</div>
+                </div>
+                <div class="crop-btn">
+                    <img src="image/2026-04-23_142522.png" alt="有机水稻" class="crop-icon">
+                    <div class="crop-name">有机水稻</div>
+                </div>
+                <div class="crop-btn">
+                    <img src="image/2026-04-23_142655.png" alt="优质水稻" class="crop-icon">
+                    <div class="crop-name">优质水稻</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 种植建议内容 -->
+        <div class="suggestions-content">
+            <!-- 主要建议区域 -->
+            <div class="main-suggestions">
+                <!-- 土壤管理 -->
+                <div class="suggestion-section">
+                    <h3 class="section-title">
+                        <span class="section-icon">🌱</span>
+                        土壤管理
+                    </h3>
+                    <div class="suggestion-item">
+                        <h4 class="suggestion-title">土壤酸碱度调整</h4>
+                        <p class="suggestion-description">水稻适宜生长在pH值为6.0-7.0的土壤中。如果土壤偏酸性，可适量施加石灰；如果偏碱性，可施加硫磺粉进行调整。</p>
+                    </div>
+                    <div class="suggestion-item">
+                        <h4 class="suggestion-title">土壤肥力管理</h4>
+                        <p class="suggestion-description">根据土壤检测结果，合理施加氮、磷、钾肥料。水稻生长前期需要较多氮肥，中期需要磷钾肥，后期应减少氮肥施用量。</p>
+                    </div>
+                </div>
+
+                <!-- 灌溉管理 -->
+                <div class="suggestion-section">
+                    <h3 class="section-title">
+                        <span class="section-icon">💧</span>
+                        灌溉管理
+                    </h3>
+                    <div class="suggestion-item">
+                        <h4 class="suggestion-title">水分需求</h4>
+                        <p class="suggestion-description">水稻生长期间需要保持适宜的水分。插秧后应保持浅水层，分蘖期保持3-5厘米水层，孕穗期保持5-7厘米水层，灌浆期保持干湿交替。</p>
+                    </div>
+                    <div class="suggestion-item">
+                        <h4 class="suggestion-title">灌溉方法</h4>
+                        <p class="suggestion-description">采用节水灌溉技术，如间歇灌溉、湿润灌溉等，减少水资源浪费，提高水分利用效率。</p>
+                    </div>
+                </div>
+
+                <!-- 病虫害防治 -->
+                <div class="suggestion-section">
+                    <h3 class="section-title">
+                        <span class="section-icon">🐛</span>
+                        病虫害防治
+                    </h3>
+                    <div class="suggestion-item">
+                        <h4 class="suggestion-title">稻瘟病防治</h4>
+                        <p class="suggestion-description">定期监测稻瘟病发生情况，发现病株及时拔除。可使用三环唑、稻瘟灵等药剂进行防治，注意药剂轮换使用，避免产生抗药性。</p>
+                    </div>
+                    <div class="suggestion-item">
+                        <h4 class="suggestion-title">稻飞虱防治</h4>
+                        <p class="suggestion-description">利用黄板诱杀成虫，或使用吡虫啉、噻虫嗪等药剂进行防治。注意在低龄若虫期施药效果最佳。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 侧边栏 -->
+            <div class="sidebar">
+                <!-- 天气信息 -->
+                <div class="sidebar-card">
+                    <h3 class="sidebar-title">天气信息</h3>
+                    <div class="weather-info">
+                        <div class="weather-item">
+                            <span class="weather-label">温度</span>
+                            <span class="weather-value">25°C</span>
+                        </div>
+                        <div class="weather-item">
+                            <span class="weather-label">湿度</span>
+                            <span class="weather-value">65%</span>
+                        </div>
+                        <div class="weather-item">
+                            <span class="weather-label">降水</span>
+                            <span class="weather-value">10mm</span>
+                        </div>
+                        <div class="weather-item">
+                            <span class="weather-label">风力</span>
+                            <span class="weather-value">3级</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 生长阶段 -->
+                <div class="sidebar-card">
+                    <h3 class="sidebar-title">生长阶段</h3>
+                    <div class="growth-stages">
+                        <div class="stage-item">
+                            <div class="stage-icon">🌱</div>
+                            <div class="stage-info">
+                                <div class="stage-name">苗期</div>
+                                <div class="stage-duration">15-20天</div>
+                            </div>
+                            <div class="stage-progress">100%</div>
+                        </div>
+                        <div class="stage-item">
+                            <div class="stage-icon">🌿</div>
+                            <div class="stage-info">
+                                <div class="stage-name">分蘖期</div>
+                                <div class="stage-duration">25-30天</div>
+                            </div>
+                            <div class="stage-progress">75%</div>
+                        </div>
+                        <div class="stage-item">
+                            <div class="stage-icon">🌾</div>
+                            <div class="stage-info">
+                                <div class="stage-name">孕穗期</div>
+                                <div class="stage-duration">15-20天</div>
+                            </div>
+                            <div class="stage-progress">0%</div>
+                        </div>
+                        <div class="stage-item">
+                            <div class="stage-icon">🌕</div>
+                            <div class="stage-info">
+                                <div class="stage-name">灌浆期</div>
+                                <div class="stage-duration">20-25天</div>
+                            </div>
+                            <div class="stage-progress">0%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 季节性建议 -->
+        <section class="seasonal-suggestions">
+            <h2 class="seasonal-title">
+                <span class="season-icon">📅</span>
+                季节性建议
+            </h2>
+            <div class="seasonal-content">
+                <div class="season-card">
+                    <h3 class="season-name">
+                        <span class="season-icon">春</span>
+                        春季
+                    </h3>
+                    <ul class="season-tips">
+                        <li class="season-tip">适时播种，合理密植</li>
+                        <li class="season-tip">加强苗期管理，促进根系生长</li>
+                        <li class="season-tip">注意防寒保暖，避免倒春寒影响</li>
+                        <li class="season-tip">及时防治苗期病虫害</li>
+                    </ul>
+                </div>
+                <div class="season-card">
+                    <h3 class="season-name">
+                        <span class="season-icon">夏</span>
+                        夏季
+                    </h3>
+                    <ul class="season-tips">
+                        <li class="season-tip">加强水分管理，保持适宜湿度</li>
+                        <li class="season-tip">合理追肥，促进分蘖和孕穗</li>
+                        <li class="season-tip">加强病虫害监测和防治</li>
+                        <li class="season-tip">注意防涝防旱，确保作物生长</li>
+                    </ul>
+                </div>
+                <div class="season-card">
+                    <h3 class="season-name">
+                        <span class="season-icon">秋</span>
+                        秋季
+                    </h3>
+                    <ul class="season-tips">
+                        <li class="season-tip">加强灌浆期管理，提高结实率</li>
+                        <li class="season-tip">注意防治后期病虫害</li>
+                        <li class="season-tip">适时收获，避免倒伏</li>
+                        <li class="season-tip">做好收获后的田间管理</li>
+                    </ul>
+                </div>
+                <div class="season-card">
+                    <h3 class="season-name">
+                        <span class="season-icon">冬</span>
+                        冬季
+                    </h3>
+                    <ul class="season-tips">
+                        <li class="season-tip">做好农田翻耕和土壤改良</li>
+                        <li class="season-tip">清理田间残茬，减少病虫害越冬场所</li>
+                        <li class="season-tip">制定下一年的种植计划</li>
+                        <li class="season-tip">准备种子和肥料等生产资料</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="footer-text">© 2026 AI农业病虫害识别平台. 保留所有权利.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 模拟种植建议数据
+            const mockSuggestions = {
+                '常规水稻': {
+                    soil_management: '1. 选择肥沃、排水良好的土壤\n2. 深耕细作，改善土壤结构\n3. 适量施用基肥，以有机肥为主\n4. 定期进行土壤检测，根据检测结果调整施肥方案',
+                    irrigation_management: '1. 保持浅水层，促进秧苗生长\n2. 避免积水，防止烂秧\n3. 根据天气情况及时调整灌溉\n4. 采用节水灌溉技术，如间歇灌溉、湿润灌溉等',
+                    pest_control: '1. 防治稻飞虱、稻螟虫等害虫\n2. 预防稻瘟病、纹枯病等病害\n3. 合理使用农药，注意安全间隔期\n4. 保护天敌，如蜘蛛、瓢虫等',
+                    seasonal_advice: '春季气温较低，注意防寒保暖，促进秧苗早发\n夏季气温高，注意防热降温，保持田间通风\n秋季是水稻灌浆的关键时期，要加强田间管理，确保籽粒饱满\n冬季做好农田翻耕和土壤改良，清理田间残茬，减少病虫害越冬场所'
+                },
+                '杂交水稻': {
+                    soil_management: '1. 选择肥沃、排水良好的土壤\n2. 深耕细作，改善土壤结构\n3. 适量施用基肥，以有机肥为主\n4. 杂交水稻需肥量较大，应适当增加施肥量',
+                    irrigation_management: '1. 保持浅水层，促进秧苗生长\n2. 避免积水，防止烂秧\n3. 根据天气情况及时调整灌溉\n4. 杂交水稻对水分要求较高，应保持充足的水分供应',
+                    pest_control: '1. 防治稻飞虱、稻螟虫等害虫\n2. 预防稻瘟病、纹枯病等病害\n3. 合理使用农药，注意安全间隔期\n4. 保护天敌，如蜘蛛、瓢虫等',
+                    seasonal_advice: '春季气温较低，注意防寒保暖，促进秧苗早发\n夏季气温高，注意防热降温，保持田间通风\n秋季是水稻灌浆的关键时期，要加强田间管理，确保籽粒饱满\n冬季做好农田翻耕和土壤改良，清理田间残茬，减少病虫害越冬场所'
+                },
+                '有机水稻': {
+                    soil_management: '1. 选择肥沃、排水良好的土壤\n2. 深耕细作，改善土壤结构\n3. 以有机肥为主，避免使用化肥\n4. 定期进行土壤检测，根据检测结果调整施肥方案',
+                    irrigation_management: '1. 保持浅水层，促进秧苗生长\n2. 避免积水，防止烂秧\n3. 根据天气情况及时调整灌溉\n4. 采用节水灌溉技术，如间歇灌溉、湿润灌溉等',
+                    pest_control: '1. 采用物理防治和生物防治方法\n2. 利用天敌防治害虫\n3. 使用有机农药，如苦参碱、印楝素等\n4. 合理轮作，减少病虫害发生',
+                    seasonal_advice: '春季气温较低，注意防寒保暖，促进秧苗早发\n夏季气温高，注意防热降温，保持田间通风\n秋季是水稻灌浆的关键时期，要加强田间管理，确保籽粒饱满\n冬季做好农田翻耕和土壤改良，清理田间残茬，减少病虫害越冬场所'
+                },
+                '优质水稻': {
+                    soil_management: '1. 选择肥沃、排水良好的土壤\n2. 深耕细作，改善土壤结构\n3. 适量施用基肥，以有机肥为主\n4. 优质水稻对土壤要求较高，应选择土壤肥力较高的地块',
+                    irrigation_management: '1. 保持浅水层，促进秧苗生长\n2. 避免积水，防止烂秧\n3. 根据天气情况及时调整灌溉\n4. 优质水稻对水分要求较高，应保持充足的水分供应',
+                    pest_control: '1. 防治稻飞虱、稻螟虫等害虫\n2. 预防稻瘟病、纹枯病等病害\n3. 合理使用农药，注意安全间隔期\n4. 保护天敌，如蜘蛛、瓢虫等',
+                    seasonal_advice: '春季气温较低，注意防寒保暖，促进秧苗早发\n夏季气温高，注意防热降温，保持田间通风\n秋季是水稻灌浆的关键时期，要加强田间管理，确保籽粒饱满\n冬季做好农田翻耕和土壤改良，清理田间残茬，减少病虫害越冬场所'
+                }
+            };
+            
+            // 作物选择按钮点击事件
+            const cropBtns = document.querySelectorAll('.crop-btn');
+            cropBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // 移除所有按钮的active类
+                    cropBtns.forEach(b => b.classList.remove('active'));
+                    // 添加当前按钮的active类
+                    this.classList.add('active');
+                    
+                    // 切换作物类型后的建议更新
+                    const cropName = this.querySelector('.crop-name').textContent;
+                    updateSuggestions(cropName);
+                });
+            });
+
+            // 更新种植建议
+            function updateSuggestions(riceVariety) {
+                const suggestion = mockSuggestions[riceVariety];
+                
+                if (suggestion) {
+                    // 更新土壤管理建议
+                    const soilManagementSection = document.querySelector('.suggestion-section:nth-child(1)');
+                    soilManagementSection.innerHTML = `
+                        <h3 class="section-title">
+                            <span class="section-icon">🌱</span>
+                            土壤管理
+                        </h3>
+                        <div class="suggestion-item">
+                            <h4 class="suggestion-title">土壤管理建议</h4>
+                            <p class="suggestion-description">${suggestion.soil_management}</p>
+                        </div>
+                    `;
+                    
+                    // 更新灌溉管理建议
+                    const irrigationManagementSection = document.querySelector('.suggestion-section:nth-child(2)');
+                    irrigationManagementSection.innerHTML = `
+                        <h3 class="section-title">
+                            <span class="section-icon">💧</span>
+                            灌溉管理
+                        </h3>
+                        <div class="suggestion-item">
+                            <h4 class="suggestion-title">灌溉管理建议</h4>
+                            <p class="suggestion-description">${suggestion.irrigation_management}</p>
+                        </div>
+                    `;
+                    
+                    // 更新病虫害防治建议
+                    const pestControlSection = document.querySelector('.suggestion-section:nth-child(3)');
+                    pestControlSection.innerHTML = `
+                        <h3 class="section-title">
+                            <span class="section-icon">🐛</span>
+                            病虫害防治
+                        </h3>
+                        <div class="suggestion-item">
+                            <h4 class="suggestion-title">病虫害防治建议</h4>
+                            <p class="suggestion-description">${suggestion.pest_control}</p>
+                        </div>
+                    `;
+                    
+                    // 更新季节性建议
+                    const seasonalSuggestions = document.querySelector('.seasonal-content');
+                    seasonalSuggestions.innerHTML = `
+                        <div class="season-card">
+                            <h3 class="season-name">
+                                <span class="season-icon">📅</span>
+                                季节性建议
+                            </h3>
+                            <ul class="season-tips">
+                                ${suggestion.seasonal_advice ? suggestion.seasonal_advice.split('\n').map(tip => `<li class="season-tip">${tip}</li>`).join('') : '<li class="season-tip">暂无季节性建议</li>'}
+                            </ul>
+                        </div>
+                    `;
+                }
+            }
+
+            // 初始化默认显示的建议
+            updateSuggestions('常规水稻');
+
+            // 用户头像点击事件
+            const userAvatar = document.querySelector('.user-avatar');
+            userAvatar.addEventListener('click', function() {
+                location.href = 'profile.html';
+            });
+        });
+    </script>
+</body>
+</html>
