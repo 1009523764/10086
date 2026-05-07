@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI农业病虫害识别平台 - 关于我们</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #4CAF50;
+            --primary-hover: #45a049;
+            --secondary-color: #2196F3;
+            --text-color: #333;
+            --light-text: #666;
+            --background: #f5f5f5;
+            --card-bg: #fff;
+            --border-radius: 8px;
+            --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8f5e8 100%);
+            min-height: 100vh;
+            color: var(--text-color);
+        }
+
+        /* 导航栏 */
+        .navbar {
+            background: var(--card-bg);
+            box-shadow: var(--shadow);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-color);
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+        }
+
+        .logo-text {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 8px 12px;
+            border-radius: var(--border-radius);
+        }
+
+        .nav-link:hover {
+            background: rgba(76, 175, 80, 0.1);
+            color: var(--primary-color);
+        }
+
+        .nav-link.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* 主要内容 */
+        .main-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* 返回按钮 */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary-color);
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        /* 关于卡片 */
+        .about-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 40px;
+            margin-bottom: 30px;
+        }
+
+        /* Logo区域 */
+        .about-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .about-logo {
+            width: 100px;
+            height: 100px;
+            background: var(--primary-color);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            margin: 0 auto 20px;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .about-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .about-version {
+            display: inline-block;
+            background: rgba(76, 175, 80, 0.1);
+            color: var(--primary-color);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* 介绍文本 */
+        .about-description {
+            text-align: center;
+            color: var(--light-text);
+            line-height: 1.8;
+            margin-bottom: 40px;
+            font-size: 16px;
+        }
+
+        /* 功能特点 */
+        .features-section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title .icon {
+            font-size: 20px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .feature-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .feature-desc {
+            font-size: 14px;
+            color: var(--light-text);
+        }
+
+        /* 信息列表 */
+        .info-list {
+            list-style: none;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            color: var(--light-text);
+        }
+
+        .info-value {
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .info-value a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .info-value a:hover {
+            text-decoration: underline;
+        }
+
+        /* 联系方式 */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+
+        .contact-item {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--text-color);
+        }
+
+        .contact-item:hover {
+            background: rgba(76, 175, 80, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .contact-icon {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .contact-label {
+            font-weight: 500;
+        }
+
+        /* 法律链接 */
+        .legal-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid #eee;
+        }
+
+        .legal-link {
+            color: var(--light-text);
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .legal-link:hover {
+            color: var(--primary-color);
+        }
+
+        /* 页脚 */
+        .footer {
+            background: var(--card-bg);
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            padding: 30px 0;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            color: var(--light-text);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .navbar-container {
+                flex-direction: column;
+                gap: 15px;
+                padding: 0 15px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .main-container {
+                padding: 20px 15px;
+            }
+
+            .about-card {
+                padding: 25px;
+            }
+
+            .about-logo {
+                width: 80px;
+                height: 80px;
+                font-size: 40px;
+            }
+
+            .about-title {
+                font-size: 20px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .legal-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .info-item {
+                flex-direction: column;
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="home.html" class="logo">
+                <div class="logo-icon">🌱</div>
+                <span class="logo-text">AI农业病虫害识别平台</span>
+            </a>
+            <div class="nav-links">
+                <a href="home.html" class="nav-link">首页</a>
+                <a href="capture.html" class="nav-link">拍照识别</a>
+                <a href="suggestions.html" class="nav-link">种植建议</a>
+                <a href="history.html" class="nav-link">历史记录</a>
+                <a href="knowledge.html" class="nav-link">知识库</a>
+            </div>
+            <div class="user-menu">
+                <span>欢迎，用户</span>
+                <div class="user-avatar" onclick="location.href='profile.html'">U</div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要内容 -->
+    <main class="main-container">
+        <!-- 返回链接 -->
+        <a href="profile.html" class="back-link">← 返回个人中心</a>
+
+        <!-- 关于卡片 -->
+        <div class="about-card">
+            <!-- Logo和标题 -->
+            <div class="about-header">
+                <div class="about-logo">🌱</div>
+                <h1 class="about-title">AI农业病虫害识别平台</h1>
+                <span class="about-version">版本 1.0.0</span>
+            </div>
+
+            <!-- 应用介绍 -->
+            <p class="about-description">
+                我们致力于利用人工智能技术帮助农民和农业从业者快速识别农作物病虫害，
+                提供专业的防治建议和种植指导，助力智慧农业发展。
+            </p>
+
+            <!-- 功能特点 -->
+            <div class="features-section">
+                <h2 class="section-title">
+                    <span class="icon">✨</span>
+                    核心功能
+                </h2>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon">📷</div>
+                        <div class="feature-title">拍照识别</div>
+                        <div class="feature-desc">AI智能识别病虫害</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📚</div>
+                        <div class="feature-title">知识库</div>
+                        <div class="feature-desc">海量农业知识</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">💡</div>
+                        <div class="feature-title">种植建议</div>
+                        <div class="feature-desc">专业防治方案</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📊</div>
+                        <div class="feature-title">历史记录</div>
+                        <div class="feature-desc">追踪识别历史</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 应用信息 -->
+            <div class="features-section">
+                <h2 class="section-title">
+                    <span class="icon">📋</span>
+                    应用信息
+                </h2>
+                <ul class="info-list">
+                    <li class="info-item">
+                        <span class="info-label">开发者</span>
+                        <span class="info-value">AI农业科技团队</span>
+                    </li>
+                    <li class="info-item">
+                        <span class="info-label">更新日期</span>
+                        <span class="info-value">2026年4月23日</span>
+                    </li>
+                    <li class="info-item">
+                        <span class="info-label">应用大小</span>
+                        <span class="info-value">25.6 MB</span>
+                    </li>
+                    <li class="info-item">
+                        <span class="info-label">官方网站</span>
+                        <span class="info-value"><a href="#">www.aiagri.com</a></span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 联系我们 -->
+            <div class="features-section">
+                <h2 class="section-title">
+                    <span class="icon">📞</span>
+                    联系我们
+                </h2>
+                <div class="contact-grid">
+                    <a href="mailto:support@aiagri.com" class="contact-item">
+                        <div class="contact-icon">📧</div>
+                        <div class="contact-label">邮箱</div>
+                    </a>
+                    <a href="#" class="contact-item">
+                        <div class="contact-icon">💬</div>
+                        <div class="contact-label">在线客服</div>
+                    </a>
+                    <a href="#" class="contact-item">
+                        <div class="contact-icon">📱</div>
+                        <div class="contact-label">微信公众号</div>
+                    </a>
+                    <a href="#" class="contact-item">
+                        <div class="contact-icon">🌐</div>
+                        <div class="contact-label">官方网站</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 法律链接 -->
+            <div class="legal-links">
+                <a href="#" class="legal-link">用户协议</a>
+                <a href="#" class="legal-link">隐私政策</a>
+                <a href="#" class="legal-link">开源许可</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="footer-text">© 2026 AI农业病虫害识别平台. 保留所有权利.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 用户头像点击事件
+            const userAvatar = document.querySelector('.user-avatar');
+            userAvatar.addEventListener('click', function() {
+                location.href = 'profile.html';
+            });
+        });
+    </script>
+</body>
+</html>
